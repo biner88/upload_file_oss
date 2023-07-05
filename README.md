@@ -1,39 +1,75 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# upload_file_oss
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+[![Pub](https://img.shields.io/pub/v/upload_file_oss.svg)](https://pub.dev/packages/upload_file_oss)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+一个简单上传文件到阿里云对象存储OSS的库。
+仅支持小文件上传。
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## 安装
 
-## Features
+[pub.dev Install](https://pub.dev/packages/mysql_utils/upload_file_oss)
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+引入文件
 
 ```dart
-const like = 'sample';
+import 'package:upload_file_oss/upload_file_oss.dart';
 ```
 
-## Additional information
+## 使用
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+详细见
+example/lib/main.dart
+
+```dart
+ final UploadFileOSSClient client = UploadFileOSSClient(
+    UploadFileOSSConfig(
+      accessKeyId: '',
+      accessKeySecret: '',
+      endpoint: 'oss-cn-hangzhou.aliyuncs.com',
+      bucket: '',
+      fileDomain: '',
+    ),
+  );
+
+  ///本地文件路径
+  final String localFilePath = '/Users/xx.png';
+
+  ///Object 存在OSS上的文件路径
+  final String savePath = 'avatar/me.jpg';
+
+  ///读取本地的文件，并转换为Uint8List
+  final File file = File(localFilePath);
+  final Uint8List fileContent = await file.readAsBytes();
+
+  ///执行上传到 OSS
+  Map res = await client.putObject(
+    savePath,
+    fileContent,
+    overwrite: false,
+  );
+  print(res);
+```
+
+## 上传返回
+
+上传成功返回
+
+```json
+  {
+    "statusCode": 200, 
+    "size": 3506, 
+    "downloadUrl": "https://yourbucket.oss-cn-hangzhou.aliyuncs.com/avatar/me.jpg", 
+    "url": "https://yourfiledomain/avatar/me.jpg",
+  }
+```
+
+上传失败返回
+
+```json
+  {
+    "statusCode": 4xx, 
+    "size": 0, 
+    "downloadUrl": "", 
+    "url": "",
+  }
+```
