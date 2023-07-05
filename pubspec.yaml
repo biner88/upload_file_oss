@@ -1,7 +1,9 @@
 name: upload_file_oss
 description: 一个简单上传文件到阿里云对象存储OSS的库。
 version: 1.0.0
-homepage: https://github.com/biner88/upload_file_oss
+homepage: https://github.com/biner88
+repository: https://github.com/biner88/upload_file_oss
+issue_tracker: https://github.com/biner88/upload_file_oss/issues
 
 environment:
   sdk: ^3.0.5
@@ -13,4 +15,3 @@ dependencies:
   mime: ^1.0.4
 dev_dependencies:
   lints: ^2.0.0
-  test: ^1.21.0
