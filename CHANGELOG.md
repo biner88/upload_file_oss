@@ -1,7 +1,11 @@
+## 1.0.4
+
+* Update dependencies
+
 ## 1.0.3
 
-* 更新依赖
+* Update dependencies
 
 ## 1.0.0
 
-* 初版
+* init
